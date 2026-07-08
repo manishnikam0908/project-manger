@@ -1,5 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
+export const getApiUrl = (path) => {
+  const base = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+  const cleanPath = path.replace(/^\//, '');
+  return base ? `${base}/${cleanPath}` : `/${cleanPath}`;
+};
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -20,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(getApiUrl('/api/auth/login'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(getApiUrl('/api/auth/register'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -80,7 +86,7 @@ export const AuthProvider = ({ children }) => {
       headers['Authorization'] = `Bearer ${activeToken}`;
     }
 
-    const res = await fetch(url, {
+    const res = await fetch(getApiUrl(url), {
       ...options,
       headers
     });

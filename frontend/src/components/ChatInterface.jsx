@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Compass, Terminal, ShieldAlert, FileText, Send, Paperclip, Loader2, RefreshCw } from 'lucide-react';
+import { getApiUrl } from '../context/AuthContext';
 
 const AGENTS = [
   { id: 'planner', name: 'Planner Agent', icon: Compass, color: 'text-purple-400 border-purple-500/30 bg-purple-500/10', description: 'Roadmaps & Requirements' },
@@ -101,7 +102,7 @@ export default function ChatInterface({ activeProject, chatHistory, setChatHisto
         headers['Authorization'] = `Bearer ${storedToken}`;
       }
 
-      const res = await fetch('/api/ai/upload-file', {
+      const res = await fetch(getApiUrl('/api/ai/upload-file'), {
         method: 'POST',
         headers,
         body: formData

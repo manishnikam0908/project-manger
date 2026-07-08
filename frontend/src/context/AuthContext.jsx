@@ -3,7 +3,9 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 export const getApiUrl = (path) => {
   const base = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
   const cleanPath = path.replace(/^\//, '');
-  return base ? `${base}/${cleanPath}` : `/${cleanPath}`;
+  const resolved = base ? `${base}/${cleanPath}` : `/${cleanPath}`;
+  console.log(`[getApiUrl] path="${path}" base="${base}" resolved="${resolved}"`);
+  return resolved;
 };
 
 const AuthContext = createContext(null);

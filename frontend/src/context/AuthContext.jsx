@@ -1,7 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const getApiUrl = (path) => {
-  const base = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const base = isLocal 
+    ? '' 
+    : (import.meta.env.VITE_API_URL || 'https://project-manger-1.onrender.com').replace(/\/$/, '');
   const cleanPath = path.replace(/^\//, '');
   const resolved = base ? `${base}/${cleanPath}` : `/${cleanPath}`;
   console.log(`[getApiUrl] path="${path}" base="${base}" resolved="${resolved}"`);
